@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Common.Interfaces;
+using Infrastructure.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows.Forms;
 
@@ -30,7 +32,10 @@ namespace TicketMaster
         private static void ConfigureServices(ServiceCollection services)
         {
             services.AddScoped<FormPrincipal>();
-            // Aquí se configuran los servicios
+            services.AddTransient<IDataRepository>(provider =>
+            {
+                return RepositoryFactory.CreateRepository();
+            });
         }
 
     }

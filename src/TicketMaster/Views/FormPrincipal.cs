@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Common.Interfaces;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -7,14 +8,16 @@ namespace TicketMaster
 {
     public partial class FormPrincipal : Form
     {
-        private List<Boleto> boletosVendidos;
 
-        public FormPrincipal()
+        private readonly IDataRepository _repository;
+
+        public FormPrincipal(IDataRepository repository)
         {
+            repository = _repository;
             InitializeComponent();
         }
 
-        private void buttonAdd_Click(object sender, EventArgs e)
+        private async void buttonAdd_Click(object sender, EventArgs e)
         {
             // Lógica para añadir un boleto
             MessageBox.Show("Añadir boleto no implementado.");
