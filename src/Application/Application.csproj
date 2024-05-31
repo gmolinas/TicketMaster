@@ -41,8 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Interfaces\IAddTicketCommand.cs" />
     <Compile Include="Common\Interfaces\IDataRepository.cs" />
+    <Compile Include="Common\Interfaces\IUseCase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UseCase\AddTicketCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
@@ -50,9 +53,7 @@
       <Name>Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UseCase\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>

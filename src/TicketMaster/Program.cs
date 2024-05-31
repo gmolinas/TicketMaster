@@ -1,8 +1,12 @@
 ﻿using Application.Common.Interfaces;
+using Application.UseCase;
+using Infrastructure.Extensions;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Reflection;
 using System.Windows.Forms;
+using TicketMaster.Controllers;
 
 namespace TicketMaster
 {
@@ -36,6 +40,12 @@ namespace TicketMaster
             {
                 return RepositoryFactory.CreateRepository();
             });
+
+            // Registrar automáticamente todos los casos de uso
+            var assembly = Assembly.GetAssembly(typeof(IUseCase)); // Cambia IUseCase por una interfaz común en tu proyecto
+            services.AddAllImplementationsOfInterface(typeof(IUseCase), assembly);
+
+            services.AddTransient<TicketMasterController>();
         }
 
     }

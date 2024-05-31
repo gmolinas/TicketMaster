@@ -3,24 +3,24 @@ using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using TicketMaster.Controllers;
 
 namespace TicketMaster
 {
     public partial class FormPrincipal : Form
     {
+        private readonly TicketMasterController _controller;
 
-        private readonly IDataRepository _repository;
-
-        public FormPrincipal(IDataRepository repository)
+        public FormPrincipal(TicketMasterController controller)
         {
-            repository = _repository;
+            _controller = controller;
             InitializeComponent();
         }
 
         private async void buttonAdd_Click(object sender, EventArgs e)
         {
+            _controller.AddTicket();
             // Lógica para añadir un boleto
-            MessageBox.Show("Añadir boleto no implementado.");
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
