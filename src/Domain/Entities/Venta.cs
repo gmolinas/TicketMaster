@@ -8,7 +8,7 @@ namespace Domain.Entities
         public DateTime FechaVenta { get; set; }
         private readonly List<Boleto> boletos;
 
-        public Venta(List<Boleto> boletosLista )
+        public Venta(List<Boleto> boletosLista)
         {
             boletos = boletosLista;
         }

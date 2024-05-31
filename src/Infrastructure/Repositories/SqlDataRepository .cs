@@ -1,9 +1,9 @@
 ﻿using Application.Common.Interfaces;
-using System.Data.SqlClient;
-using System.Data;
-using System;
-using Domain.Enums;
 using Domain.Entities;
+using Domain.Enums;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Infrastructure.Repositories
 {

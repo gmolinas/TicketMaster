@@ -1,6 +1,4 @@
 ﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using FastMember;
 using System.Data;
 
 namespace Application.UseCase

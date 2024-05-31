@@ -38,7 +38,7 @@ namespace TicketMaster
         private void buttonList_Click(object sender, EventArgs e)
         {
             // Lógica para listar todos los boletos
-            _controller.UpdateTicket(Numero.Text,totalDeDias.Text, fechaDeSalida.Text, costoDeEmbarque.Text, tipoDeBoleto.Text);
+            _controller.UpdateTicket(Numero.Text, totalDeDias.Text, fechaDeSalida.Text, costoDeEmbarque.Text, tipoDeBoleto.Text);
             RefreshDataGrid();
         }
 

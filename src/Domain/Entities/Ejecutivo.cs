@@ -9,7 +9,7 @@ namespace Domain.Entities
 
         public override DateTime CalcularRegreso()
         {
-            return FechaSalida.AddDays(TiempoEnDias); 
+            return FechaSalida.AddDays(TiempoEnDias);
         }
 
         public override double CostoBoleto()

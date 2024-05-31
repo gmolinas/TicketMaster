@@ -14,7 +14,7 @@ namespace Domain.Entities
 
         public override double CostoBoleto()
         {
-            return CostoEmbarque + Constants.IncrementaCostoTurista; 
+            return CostoEmbarque + Constants.IncrementaCostoTurista;
         }
     }
 }

@@ -7,27 +7,35 @@ TicketMaster es una aplicación de escritorio en C# diseñada para gestionar bol
 ```plaintext
 src/
 ├── Application/
-│   ├── Services/
-│   │   └── BoletoService.cs
+│   ├── Common/
+│   │    └── Interfaces
+│   │            └── Interfaces generales ...
 │   └── Interfaces/
-│       └── IBoletoService.cs
+│        └── UseCase
+│              └── casos de uso ...
 ├── Domain/
 │   ├── Entities/
-│   │   ├── Boleto.cs
-│   │   ├── Turista.cs
-│   │   └── Ejecutivo.cs
-│   └── Enums/
-│       └── TipoBoleto.cs
+│   │    ├── Boleto.cs
+│   │    ├── Turista.cs
+│   │    └── Ejecutivo.cs
+│   ├── Enums/
+│   │    └── TipoBoleto.cs
+│   ├── Dtos/
+│   └── Common/
+│       
 ├── TicketMaster/
 │   ├── Controllers/
-│   │   └── BoletoController.cs
+│   │    └── BoletoController.cs
 │   └── Views/
-│       └── MainForm.cs
+│        └── FormPrincipal.cs
+│ 
 ├── Infrastructure/
 │   ├── Repositories/
-│   │   └── BoletoRepository.cs
-│   └── Data/
-│       └── BoletoContext.cs
+│   │    ├── MemoryDataRepository
+│   │    ├── RepositoryFactory
+│   │    └── SqlDataRepository.cs
+│   └── Extensions/
+│        └── ServiceCollectionExtensions.cs
 └── Program.cs
 ```
 
@@ -51,10 +59,6 @@ src/
 
 ## Configuración y Ejecución
 
-### Prerrequisitos
-
-- [.NET SDK](https://dotnet.microsoft.com/download) instalado en tu máquina.
-- Un IDE como [Visual Studio](https://visualstudio.microsoft.com/) o [Visual Studio Code](https://code.visualstudio.com/).
 
 
 ## Uso de la Aplicación
@@ -71,5 +75,29 @@ src/
 4. **Eliminar un Boleto**:
    - Ingrese el número del boleto y haga clic en "Eliminar".
 
-5. **Listar Todos los Boletos**:
-   - Haga clic en "Listar" para ver todos los boletos registrados.
+
+### Patrones de Diseño Utilizados
+
+1. **Patrón Abstract Factory**:
+   - **Dónde**: En la clase `BoletoRepositoryFactory`.
+   - **Descripción**: Este patrón se utiliza para crear familias de objetos relacionados sin especificar sus clases concretas. La fábrica abstrae el proceso de creación del repositorio, permitiendo cambiar el backend sin cambiar el código del cliente.
+
+2. **Patrón Repository**:
+   - **Dónde**: En las interfaces y clases `IBoletoRepository` e `InMemoryBoletoRepository`.
+   - **Descripción**: Este patrón se utiliza para encapsular el acceso a los datos, proporcionando una interfaz para realizar operaciones sobre los datos (CRUD: Crear, Leer, Actualizar, Eliminar). Esto aísla la lógica de negocio de la lógica de acceso a datos.
+
+3. **Patrón Factory Method**:
+   - **Dónde**: En los constructores de las clases `Turista` y `Ejecutivo` que heredan de `Boleto`.
+   - **Descripción**: Este patrón se utiliza para delegar la creación de objetos a las subclases. Las clases `Turista` y `Ejecutivo` implementan su propia lógica de construcción.
+
+4. **Patrón Strategy**:
+   - **Dónde**: En los métodos `CalcularRegreso` y `CostoBoleto` de las clases `Turista` y `Ejecutivo`.
+   - **Descripción**: Este patrón permite definir una familia de algoritmos, encapsular cada uno de ellos y hacerlos intercambiables. Tanto `Turista` como `Ejecutivo` tienen diferentes implementaciones para calcular el costo del boleto y la fecha de regreso.
+
+5. **Patrón Template Method**:
+   - **Dónde**: Implícitamente en la clase abstracta `Boleto` con métodos que deben ser implementados por las subclases (`CalcularRegreso` y `CostoBoleto`).
+   - **Descripción**: Este patrón define el esqueleto de un algoritmo en una operación, delegando algunos pasos a las subclases. Permite que las subclases redefinan ciertos pasos de un algoritmo sin cambiar su estructura.
+
+6. **Patrón Singleton** (Potencialmente):
+   - **Dónde**: Podría aplicarse a la clase `InMemoryBoletoRepository` si se quisiera asegurar que solo exista una instancia del repositorio en memoria.
+   - **Descripción**: Este patrón asegura que una clase tenga solo una instancia y proporciona un punto de acceso global a ella.

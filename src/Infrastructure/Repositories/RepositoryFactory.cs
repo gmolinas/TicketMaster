@@ -4,7 +4,7 @@ using System.Configuration;
 
 namespace Infrastructure.Repositories
 {
-    public class RepositoryFactory 
+    public class RepositoryFactory
     {
         public static IDataRepository CreateRepository()
         {

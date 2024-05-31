@@ -1,11 +1,9 @@
 ﻿using Application.Common.Interfaces;
-using Application.UseCase;
 using Infrastructure.Extensions;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
-using System.Windows.Forms;
 using TicketMaster.Controllers;
 
 namespace TicketMaster
