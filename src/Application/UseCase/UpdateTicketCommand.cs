@@ -3,25 +3,28 @@ using Domain.Entities;
 using Domain.Enums;
 using System;
 
-
 namespace Application.UseCase
 {
-    public class AddTicketCommand : IUseCase, IAddTicketCommand
+    public class UpdateTicketCommand : IUseCase, IUpdateTicketCommand
     {
         private readonly IDataRepository _dataRepository;
 
-        public AddTicketCommand(IDataRepository dataRepository)
+        public UpdateTicketCommand(IDataRepository dataRepository)
         {
             _dataRepository = dataRepository;
         }
 
-        public void Execute(int totalDeDias, double costeEmbarque, DateTime fechaDeSalida, TipoBoleto tipoBoleto)
+        public void Execute(int numero, int totalDeDias, double costeEmbarque, DateTime fechaDeSalida, TipoBoleto tipoBoleto)
         {
+            var ticket = _dataRepository.GetTicketById(numero);
+            if (ticket.Rows.Count == 0)
+                return;
+
             Boleto boleto;
             switch (tipoBoleto)
             {
                 case TipoBoleto.Ejecutivo:
-                    boleto = new Ejecutivo(0)
+                    boleto = new Ejecutivo(numero)
                     {
                         TiempoEnDias = totalDeDias,
                         CostoEmbarque = costeEmbarque,
@@ -29,7 +32,7 @@ namespace Application.UseCase
                     };
                     break;
                 case TipoBoleto.Turista:
-                    boleto = new Turista(0)
+                    boleto = new Turista(numero)
                     {
                         TiempoEnDias = totalDeDias,
                         CostoEmbarque = costeEmbarque,
@@ -40,7 +43,7 @@ namespace Application.UseCase
                     throw new ArgumentException("Tipo de boleto no válido.");
             }
 
-            _dataRepository.AddTicket(boleto);
+            _dataRepository.UpdateTicket(boleto);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Application.Common.Interfaces;
+using Domain.Entities;
+using FastMember;
 using System.Data;
 
 namespace Application.UseCase
@@ -6,6 +8,7 @@ namespace Application.UseCase
     public class GetTicketCommand : IUseCase, IGetTicketCommand
     {
         private readonly IDataRepository _dataRepository;
+
         public GetTicketCommand(IDataRepository dataRepository)
         {
             _dataRepository = dataRepository;
@@ -13,7 +16,7 @@ namespace Application.UseCase
 
         public DataTable Execute()
         {
-           return _dataRepository.GetAllTicket();
+            return _dataRepository.GetAllTicket();
         }
 
         public DataTable Execute(int numero)

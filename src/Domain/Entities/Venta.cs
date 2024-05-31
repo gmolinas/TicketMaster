@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Domain.Entities
 {
     public class Venta
     {
         public DateTime FechaVenta { get; set; }
-        public List<Boleto> BoletosVendidos { get; set; } = new List<Boleto>();
+        private readonly List<Boleto> boletos;
+
+        public Venta(List<Boleto> boletosLista )
+        {
+            boletos = boletosLista;
+        }
 
         public bool Actualizar(Boleto unBoleto)
         {
-            var boletoExistente = BoletosVendidos.FirstOrDefault(b => b.Numero == unBoleto.Numero);
+            var boletoExistente = Buscar(unBoleto.Numero);
             if (boletoExistente != null)
             {
-                BoletosVendidos.Remove(boletoExistente);
-                BoletosVendidos.Add(unBoleto);
+                boletos.Remove(boletoExistente);
+                boletos.Add(unBoleto);
                 return true;
             }
             return false;
@@ -23,13 +27,13 @@ namespace Domain.Entities
 
         public bool Agregar(Boleto unBoleto)
         {
-            BoletosVendidos.Add(unBoleto);
+            boletos.Add(unBoleto);
             return true;
         }
 
         public Boleto Buscar(int numeroBoleto)
         {
-            return BoletosVendidos.FirstOrDefault(b => b.Numero == numeroBoleto);
+            return boletos.Find(b => b.Numero == numeroBoleto);
         }
 
         public bool Eliminar(int numeroBoleto)
@@ -37,7 +41,7 @@ namespace Domain.Entities
             var boleto = Buscar(numeroBoleto);
             if (boleto != null)
             {
-                BoletosVendidos.Remove(boleto);
+                boletos.Remove(boleto);
                 return true;
             }
             return false;
@@ -45,7 +49,8 @@ namespace Domain.Entities
 
         public List<Boleto> ListarTodos()
         {
-            return BoletosVendidos;
+            return boletos;
         }
+
     }
 }

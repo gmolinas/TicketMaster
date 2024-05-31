@@ -2,6 +2,8 @@
 using System.Data.SqlClient;
 using System.Data;
 using System;
+using Domain.Enums;
+using Domain.Entities;
 
 namespace Infrastructure.Repositories
 {
@@ -16,7 +18,7 @@ namespace Infrastructure.Repositories
 
         private DataTable ExecuteQuery(string query)
         {
-             using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -43,38 +45,48 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public  DataTable GetAllTicket()
+        public DataTable GetAllTicket()
         {
-            //cambiar la columna de TipoBoletoId por tipoBoleto y hacer un join con la tabla TipoBoleto
-            var query = "SELECT  B.Numero, B.CostoEmbarque, B.FechaSalida, B.TiempoEnDias, B.FechaRegreso, T.Descripcion AS TipoBoletoDescripcion FROM Boleto B JOIN TipoBoleto T ON B.TipoBoletoId = T.Tipo;";
-
+            var query = "SELECT  B.Numero, B.CostoEmbarque, B.FechaSalida, B.TiempoEnDias, B.FechaRegreso, T.Descripcion AS TipoBoleto FROM Boleto B JOIN TipoBoleto T ON B.TipoBoletoId = T.Tipo;";
             return ExecuteQuery(query);
         }
 
         public DataTable GetTicketById(int id)
         {
-            var query = $"SELECT  B.Numero, B.CostoEmbarque, B.FechaSalida, B.TiempoEnDias, B.FechaRegreso, T.Descripcion AS TipoBoletoDescripcion FROM Boleto B JOIN TipoBoleto T ON B.TipoBoletoId = T.Tipo WHERE  B.Numero = {id};";
+            var query = $"SELECT  B.Numero, B.CostoEmbarque, B.FechaSalida, B.TiempoEnDias, B.FechaRegreso, T.Descripcion AS TipoBoleto FROM Boleto B JOIN TipoBoleto T ON B.TipoBoletoId = T.Tipo WHERE  B.Numero = {id};";
             return ExecuteQuery(query);
         }
 
-        public void AddTicket( double ShippingCost, DateTime DepartDate, int TimeInDays )
+        public void AddTicket(Boleto boleto)
         {
-            DateTime dateTime = DateTime.Now;
-            string formattedDateTime = dateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            var query = $"INSERT INTO Boleto ( CostoEmbarque, FechaSalida, TiempoEnDias) VALUES ({ShippingCost}, '{formattedDateTime}', '{TimeInDays}')";
+            var tipoBoleto = boleto.GetType();
+            TipoBoleto enumValue = (TipoBoleto)Enum.Parse(typeof(TipoBoleto), tipoBoleto.Name);
+            int numberTipoBoleto = (int)enumValue;
+            var query = $"INSERT INTO Boleto ( CostoEmbarque, FechaSalida, TiempoEnDias, FechaRegreso, TipoBoletoId) VALUES (" +
+                $"{boleto.CostoBoleto()}," +
+                $" '{boleto.FechaSalida.ToString("yyyy-MM-dd HH:mm:ss.fff")}'," +
+                $" '{boleto.TiempoEnDias}'," +
+                $" '{boleto.CalcularRegreso().ToString("yyyy-MM-dd HH:mm:ss.fff")}'," +
+                $" '{numberTipoBoleto}')";
             ExecuteNonQuery(query);
         }
 
-        public void UpdateTicket(int number, double ShippingCost, DateTime DepartDate, int TimeInDays)
+        public void UpdateTicket(Boleto boleto)
         {
-            string formattedDateTime = DepartDate.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            var query = $"UPDATE Boleto SET CostoEmbarque = {ShippingCost}, FechaSalida = '{formattedDateTime}', TiempoEnDias = '{TimeInDays}' WHERE Numero = {number}";
+            var tipoBoleto = boleto.GetType();
+            TipoBoleto enumValue = (TipoBoleto)Enum.Parse(typeof(TipoBoleto), tipoBoleto.Name);
+            int numberTipoBoleto = (int)enumValue;
+            var query = $"UPDATE Boleto SET CostoEmbarque = {boleto.CostoBoleto()}" +
+                $", FechaSalida = '{boleto.FechaSalida.ToString("yyyy-MM-dd HH:mm:ss.fff")}'" +
+                $", TiempoEnDias = '{boleto.TiempoEnDias}'" +
+                $", FechaRegreso = '{boleto.CalcularRegreso().ToString("yyyy-MM-dd HH:mm:ss.fff")}'" +
+                $", TipoBoletoId = '{numberTipoBoleto}'  WHERE Numero = {boleto.Numero}";
             ExecuteNonQuery(query);
         }
 
         public void DeleteTicket(int id)
         {
-            var query = $"DELETE FROM Boleto WHERE Id = {id}";
+            var query = $"DELETE FROM Boleto WHERE Numero = {id}";
             ExecuteNonQuery(query);
         }
     }

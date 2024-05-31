@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domain.Entities;
+using Domain.Enums;
+using System;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -8,8 +10,8 @@ namespace Application.Common.Interfaces
     {
         DataTable GetAllTicket();
         DataTable GetTicketById(int id);
-        void AddTicket(double ShippingCost, DateTime DepartDate, int TimeInDays);
-        void UpdateTicket(int number, double ShippingCost, DateTime DepartDate, int TimeInDays);
+        void AddTicket(Boleto boleto);
+        void UpdateTicket(Boleto boleto);
         void DeleteTicket(int id);
 
     }

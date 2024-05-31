@@ -36,7 +36,7 @@ namespace TicketMaster
         private static void ConfigureServices(ServiceCollection services)
         {
             services.AddScoped<FormPrincipal>();
-            services.AddTransient<IDataRepository>(provider =>
+            services.AddSingleton<IDataRepository>(provider =>
             {
                 return RepositoryFactory.CreateRepository();
             });

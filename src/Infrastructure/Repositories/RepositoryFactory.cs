@@ -15,6 +15,8 @@ namespace Infrastructure.Repositories
             {
                 case "SQL":
                     return new SqlDataRepository(connectionString);
+                case "MEMORY":
+                    return new MemoryDataRepository();
                 default:
                     throw new InvalidOperationException("Tipo de repositorio no soportado.");
             }

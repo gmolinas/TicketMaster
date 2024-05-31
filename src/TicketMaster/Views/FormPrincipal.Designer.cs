@@ -45,6 +45,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.Numero = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBoletos)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -211,6 +212,15 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "Numero";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(343, 177);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(120, 178);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Modificar";
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -224,6 +234,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.Numero);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.groupBox1);
             this.Name = "FormPrincipal";
             this.Text = "Gestión de Boletos";
             this.Load += new System.EventHandler(this.FormPrincipal_Load);
@@ -254,6 +265,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox Numero;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

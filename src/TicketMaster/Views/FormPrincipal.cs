@@ -8,15 +8,16 @@ namespace TicketMaster
     {
         private readonly TicketMasterController _controller;
 
+
         public FormPrincipal(TicketMasterController controller)
         {
             _controller = controller;
             InitializeComponent();
-
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+            // Lógica para agregar un boleto
             _controller.AddTicket(totalDeDias.Text, fechaDeSalida.Text, costoDeEmbarque.Text, tipoDeBoleto.Text);
             RefreshDataGrid();
         }
@@ -30,13 +31,15 @@ namespace TicketMaster
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             // Lógica para eliminar un boleto
-            MessageBox.Show("Eliminar boleto no implementado.");
+            _controller.DeleteTicket(Numero.Text);
+            RefreshDataGrid();
         }
 
         private void buttonList_Click(object sender, EventArgs e)
         {
             // Lógica para listar todos los boletos
-            MessageBox.Show("Listar boletos no implementado.");
+            _controller.UpdateTicket(Numero.Text,totalDeDias.Text, fechaDeSalida.Text, costoDeEmbarque.Text, tipoDeBoleto.Text);
+            RefreshDataGrid();
         }
 
         private void RefreshDataGrid()
