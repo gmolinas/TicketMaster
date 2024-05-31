@@ -14,7 +14,7 @@ namespace Domain.Entities
             Numero = numero;
         }
 
-        public abstract double CalcularRegreso();
+        public abstract DateTime CalcularRegreso();
         public abstract double CostoBoleto();
     }
 }

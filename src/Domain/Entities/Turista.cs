@@ -1,17 +1,20 @@
-﻿namespace Domain.Entities
+﻿using Domain.Common;
+using System;
+
+namespace Domain.Entities
 {
     public class Turista : Boleto
     {
         public Turista(int numero) : base(numero) { }
 
-        public override double CalcularRegreso()
+        public override DateTime CalcularRegreso()
         {
-            return 0; // Implementar lógica
+            return FechaSalida.AddDays(TiempoEnDias);
         }
 
         public override double CostoBoleto()
         {
-            return CostoEmbarque; // Implementar lógica
+            return CostoEmbarque + Constants.IncrementaCostoTurista; 
         }
     }
 }

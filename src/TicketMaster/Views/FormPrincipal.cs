@@ -1,7 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Windows.Forms;
 using TicketMaster.Controllers;
 
@@ -15,24 +12,19 @@ namespace TicketMaster
         {
             _controller = controller;
             InitializeComponent();
+
         }
 
-        private async void buttonAdd_Click(object sender, EventArgs e)
+        private void buttonAdd_Click(object sender, EventArgs e)
         {
-            _controller.AddTicket();
-            // Lógica para añadir un boleto
-        }
-
-        private void buttonUpdate_Click(object sender, EventArgs e)
-        {
-            // Lógica para actualizar un boleto
-            MessageBox.Show("Actualizar boleto no implementado.");
+            _controller.AddTicket(totalDeDias.Text, fechaDeSalida.Text, costoDeEmbarque.Text, tipoDeBoleto.Text);
+            RefreshDataGrid();
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             // Lógica para buscar un boleto
-            MessageBox.Show("Buscar boleto no implementado.");
+            dataGridViewBoletos.DataSource = _controller.GetTicket(Numero.Text);
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -45,6 +37,16 @@ namespace TicketMaster
         {
             // Lógica para listar todos los boletos
             MessageBox.Show("Listar boletos no implementado.");
+        }
+
+        private void RefreshDataGrid()
+        {
+            dataGridViewBoletos.DataSource = _controller.GetTicket();
+        }
+
+        private void FormPrincipal_Load(object sender, EventArgs e)
+        {
+            RefreshDataGrid();
         }
     }
 }
