@@ -2,7 +2,6 @@
 {
     public enum TipoBoleto
     {
-        Todos,
         Turista,
         Ejecutivo
     }

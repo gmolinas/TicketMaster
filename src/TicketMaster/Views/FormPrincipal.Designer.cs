@@ -178,7 +178,6 @@
             // 
             this.tipoDeBoleto.FormattingEnabled = true;
             this.tipoDeBoleto.Items.AddRange(new object[] {
-            "Todos",
             "Turista",
             "Ejecutivo"});
             this.tipoDeBoleto.Location = new System.Drawing.Point(15, 139);
