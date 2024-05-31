@@ -2,6 +2,8 @@
 
 TicketMaster es una aplicación de escritorio en C# diseñada para gestionar boletos, calcular su costo y la fecha de regreso. La aplicación sigue una arquitectura limpia con separación de responsabilidades en varias capas: UI, BLL, DAL y DomainModel.
 
+![image](https://github.com/gmolinas/TicketMaster/assets/90208075/94354fcf-eaeb-470c-ae0f-b556b98dff7e)
+
 ## Estructura del Proyecto
 
 ```plaintext
@@ -60,6 +62,32 @@ src/
 ## Configuración y Ejecución
 
 
+# Base de datos
+
+```sql
+-- Crear tabla TipoBoleto
+CREATE TABLE TipoBoleto (
+    Tipo INT PRIMARY KEY,
+    Descripcion VARCHAR(50) NOT NULL
+);
+```
+Incertar datos en TipoBoleto
+```sql
+INSERT INTO TipoBoleto (Tipo, Descripcion) VALUES (0, 'Turista');
+INSERT INTO TipoBoleto (Tipo, Descripcion) VALUES (1, 'Ejecutivo');
+```
+```sql
+-- Crear tabla Boleto
+CREATE TABLE Boleto (
+	Numero int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	CostoEmbarque float NOT NULL,
+	FechaSalida datetime2(3) NOT NULL,
+	TiempoEnDias int NOT NULL,
+	FechaRegreso datetime2(3) NOT NULL,
+	TipoBoletoId int NULL,
+    FOREIGN KEY (TipoBoletoId) REFERENCES TipoBoleto(Tipo)
+);
+```
 
 ## Uso de la Aplicación
 
