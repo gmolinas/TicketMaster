@@ -1,6 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Common.Interfaces;
+using Infrastructure.Extensions;
+using Infrastructure.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Windows.Forms;
+using System.Reflection;
+using TicketMaster.Controllers;
 
 namespace TicketMaster
 {
@@ -30,7 +34,16 @@ namespace TicketMaster
         private static void ConfigureServices(ServiceCollection services)
         {
             services.AddScoped<FormPrincipal>();
-            // Aquí se configuran los servicios
+            services.AddSingleton<IDataRepository>(provider =>
+            {
+                return RepositoryFactory.CreateRepository();
+            });
+
+            // Registrar automáticamente todos los casos de uso
+            var assembly = Assembly.GetAssembly(typeof(IUseCase)); // Cambia IUseCase por una interfaz común en tu proyecto
+            services.AddAllImplementationsOfInterface(typeof(IUseCase), assembly);
+
+            services.AddTransient<TicketMasterController>();
         }
 
     }

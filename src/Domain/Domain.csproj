@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Constants.cs" />
+    <Compile Include="Dtos\BoletoResponseDto.cs" />
     <Compile Include="Entities\Boleto.cs" />
     <Compile Include="Entities\Ejecutivo.cs" />
     <Compile Include="Entities\Turista.cs" />
+    <Compile Include="Entities\Venta.cs" />
     <Compile Include="Enums\TipoBoleto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,47 +1,55 @@
-﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Windows.Forms;
+using TicketMaster.Controllers;
 
 namespace TicketMaster
 {
     public partial class FormPrincipal : Form
     {
-        private List<Boleto> boletosVendidos;
+        private readonly TicketMasterController _controller;
 
-        public FormPrincipal()
+
+        public FormPrincipal(TicketMasterController controller)
         {
+            _controller = controller;
             InitializeComponent();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            // Lógica para añadir un boleto
-            MessageBox.Show("Añadir boleto no implementado.");
-        }
-
-        private void buttonUpdate_Click(object sender, EventArgs e)
-        {
-            // Lógica para actualizar un boleto
-            MessageBox.Show("Actualizar boleto no implementado.");
+            // Lógica para agregar un boleto
+            _controller.AddTicket(totalDeDias.Text, fechaDeSalida.Text, costoDeEmbarque.Text, tipoDeBoleto.Text);
+            RefreshDataGrid();
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             // Lógica para buscar un boleto
-            MessageBox.Show("Buscar boleto no implementado.");
+            dataGridViewBoletos.DataSource = _controller.GetTicket(Numero.Text);
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             // Lógica para eliminar un boleto
-            MessageBox.Show("Eliminar boleto no implementado.");
+            _controller.DeleteTicket(Numero.Text);
+            RefreshDataGrid();
         }
 
         private void buttonList_Click(object sender, EventArgs e)
         {
             // Lógica para listar todos los boletos
-            MessageBox.Show("Listar boletos no implementado.");
+            _controller.UpdateTicket(Numero.Text, totalDeDias.Text, fechaDeSalida.Text, costoDeEmbarque.Text, tipoDeBoleto.Text);
+            RefreshDataGrid();
+        }
+
+        private void RefreshDataGrid()
+        {
+            dataGridViewBoletos.DataSource = _controller.GetTicket();
+        }
+
+        private void FormPrincipal_Load(object sender, EventArgs e)
+        {
+            RefreshDataGrid();
         }
     }
 }
